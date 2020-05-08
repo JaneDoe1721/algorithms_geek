@@ -10,12 +10,12 @@ if a.isdigit() and b.isdigit() and c.isdigit():
     a = int(a)
     b = int(b)
     c = int(c)
-    if not a <= 0 or not b <= 0 or not c <= 0:
-        if a is b is c:
+    if a + b > c and c + a > b and b + c > a:
+        if a == b == c:
             print('Треугольник равносторонний')
-        elif a is b:
+        elif a == b or a == c or b == c:
             print('Равнобедренныйтреугольник')
-        elif a != b !=  c:
+        elif a != b != c:
             print("Разносторонний треугольник")
         else:
             print("Треугольник не подходит условиям")

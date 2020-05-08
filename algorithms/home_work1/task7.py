@@ -7,6 +7,8 @@ if year % 4 == 0:
     if year % 100 == 0:
         if year % 400 == 0:
             print(f'Високосный {year} год (366)')
+        else:
+            print(f'Невисокосный {year} год (365)')
     else:
         print(f'Это не столетие, значит {year} Год  високосный (366)')
 else:

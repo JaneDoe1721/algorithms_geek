@@ -7,10 +7,7 @@ a, b, c = int(a), int(b), int(c)
 
 if a > b:
     if b > c:
-        if c > a:
-            print(f'a = {a}')
-        elif c < a:
-            print(f'b = {b}')
+        print(f'b = {b}')
     elif a > c:
         print(f'c ={c}')
     else:
