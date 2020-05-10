@@ -1,11 +1,11 @@
 # Вывести на экран коды и символы таблицы ASCII, начиная с символа под номером 32 и заканчивая 127-м включительно.
 # Вывод выполнить в табличной форме: по десять пар «код-символ» в каждой строке.
 
-total = [chr(itm) for itm in range(32, 128)]
-
 i = 1
-for itm in enumerate(total, 32):
-    print(itm)
+for itm in range(32, 128):
+    print(f"%3d-%s" % (itm, chr(itm)), end='    ')
     if i % 10 == 0:
-        print('\n')
+        print('')
     i += 1
+
+print('\n')
