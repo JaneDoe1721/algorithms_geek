@@ -47,6 +47,11 @@
 # 	 type=<class 'int'>, size=28, object=11
 
 #     type=<class 'int'>, size=28, object=9
+# Количество памяти переданного объекта 128 байт(а).
+# Общее количество занятой памяти внутри объекта: 224 байт(а).
+# переменная i
+# Количество памяти переданного объекта 28 байт(а).
+# Общее количество занятой памяти внутри объекта: 0 байт(а).
 
 
 # Вариант №2
@@ -68,6 +73,8 @@
 # 	 type=<class 'int'>, size=28, object=7
 # 	 type=<class 'int'>, size=28, object=8
 # 	 type=<class 'int'>, size=28, object=9
+# Количество памяти переданного объекта 368 байт(а).
+# Общее количество занятой памяти внутри объекта: 224 байт(а).
 
 # Вариант № 3
 # type=<class 'set'>, size=736, object={
@@ -88,6 +95,8 @@
 # 	 type=<class 'str'>, size=124, object=Число 7 кратно - 14 чисел
 # 	 type=<class 'str'>, size=124, object=Число 9 кратно - 11 чисел
 # 	 type=<class 'str'>, size=124, object=Число 2 кратно - 49 чисел
+# Количество памяти переданного объекта 736 байт(а).
+# Общее количество занятой памяти внутри объекта: 992 байт(а).
 
 
 # Задача
@@ -101,7 +110,6 @@ import platform
 print(f'Версия интерпритатора : {sys.version}\n')
 print(f'Версия OC: {platform.platform()}\n')
 
-
 # # Вариант №1
 a = [0] * 8
 
@@ -110,15 +118,12 @@ for i in range(2, 100):
     for j in range(2, 10):
 
         if i % j == 0:
-
             a[j - 2] += 1
 i = 0
 
 while i < len(a):
-
     # print(f'Для числа {i+2} - {a[i]} чисел кратны ')
     i += 1
-
 
 # Вариант №2
 total = {}
@@ -133,26 +138,33 @@ for i in range(2, 10):
 
     # print(f'Для числа {i} кратны - {len(total[i])} Чисел. Эти числа: {total[i]}.')
 
-
 # # Вариант №3
 result = set()
 
 for itm in range(2, 10):
     result.add(f'Число {itm} кратно - {99 // itm} чисел')
 
+
 # for itm in result:
 #     print(itm)
 
 
-def show_size(x, level=0):
-    print('\t' * level, f'type={x.__class__}, size={sys.getsizeof(x)}, object={x}')
+def show_size(variable):
+    print(f'Тип объекта: {type(variable)}, Память: size={sys.getsizeof(variable)}, object={variable}')
+    result = 0
 
-    if hasattr(x, '__iter__'):
-        if hasattr(x, '__items__'):
-            for xx in x.items():
-                show_size(xx, level + 1)
-        elif not isinstance(x, str):
-            for xx in x:
-                show_size(xx, level + 1)
+    if hasattr(variable, '__iter__'):
+        if hasattr(variable, '__items__'):
+            for itm in variable.items():
+                result += sys.getsizeof(itm)
+                show_size(itm)
+        elif not isinstance(variable, str):
+            for itm in variable:
+                result += sys.getsizeof(itm)
+                show_size(itm)
+
+    return f'Количество памяти переданного объекта {sys.getsizeof(variable)} байт(а).' \
+           f'\nОбщее количество занятой памяти внутри объекта: {result} байт(а).'
 
 
+print(show_size(i))
