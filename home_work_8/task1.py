@@ -31,7 +31,7 @@ def number_of_ribs(graph):
 
         current += 1
 
-    return f'Количсетво рукопожатий равно: {result}'
+    return f'Количсетво рукопожатий равно: {result // 2}'
 
 
 print(number_of_ribs(graph))

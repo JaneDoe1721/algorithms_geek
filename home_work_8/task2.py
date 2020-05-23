@@ -23,11 +23,10 @@ def dijkstra(graph, start):
 
     cost[start] = 0  # cтоимость пути
     min_cost = 0  # минимальная стоимость, будет показывать двигаемся мы по графу или уже нет
-    way = []
+
     while min_cost < float('inf'):
 
         is_visited[start] = True
-        way.append(start)
 
         for i, vertex in enumerate(graph[start]):
             if vertex != 0 and not is_visited[i]:
@@ -42,7 +41,19 @@ def dijkstra(graph, start):
                 min_cost = cost[i]
                 start = i  # значение из текущей вершины
 
-    return f'{cost} \n{way} '
+    result = [[] for _ in range(length)]
+
+    for itm in range(length):
+        if is_visited[itm]:
+            result[itm].append(itm)
+            n = itm
+            while parent[n] != -1:
+                result[itm].append(parent[n])
+                n = parent[n]
+
+            result[itm].reverse()
+
+    return f'{cost} \n{result}'
 
 
 s = int(input('От какой вершины идти: '))

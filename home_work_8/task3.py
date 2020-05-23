@@ -6,15 +6,16 @@
 # a. граф должен храниться в виде списка смежности;
 #
 # b. генерация графа выполняется в отдельной функции, которая принимает на вход число вершин.
-# № 3 Написать алгоритм поиска в глубину
 
-from collections import deque
+
+import random
+
 n = int(input('Введите количество вершин: \n'))
 
 
 def generation_graph(n):
     i = 0
-    graph = [[itm for itm in range(n)] for _ in range(n)]
+    graph = [[itm for itm in range(random.randint(0, n))] for _ in range(n)]
 
     while i < len(graph):
         for itm, value in enumerate(graph[i]):
@@ -30,42 +31,28 @@ g = generation_graph(n)
 print(*g, sep='\n')
 
 
-def dfs(graph, start, finish):
+def dfs(graph, start):
+    path = []
     parent = [None for _ in range(len(graph))]  # если были в данной вершине
     is_visited = [False for _ in range(len(graph))]  # Если не были в данной вершине
 
-    deq = deque([start])  # отсюда начинаем двигаться
-    is_visited[start] = True
+    def dfs_1(vertex):
+        is_visited[vertex] = True
+        path.append(vertex)
 
-    while len(deq) > 0:
+        for itm in graph[vertex]:
+            if not is_visited[itm]:
+                parent[itm] = vertex
+                dfs_1(itm)
+                path.append(vertex)
 
-        current = deq.pop()
+        else:
+            path.append(-vertex)
 
-        if current == finish:
-            break
-        for i, vertex in enumerate(graph[current]):
-            if vertex and not is_visited[i]:
-                is_visited[i] = True
-                parent[i] = current
-                deq.appendleft(i)
+    dfs_1(start)
 
-    else:
-        return f'Из вершины {start} нельзя попасть в вершину {finish}'
-
-    cost = 0  # стоимость пути
-    way = deque([finish])  # целевая вершина
-    i = finish
-
-    while parent[i] != start:
-        cost += 1
-        way.appendleft(parent[i])
-        i = parent[i]
-    cost += 1
-    way.appendleft(start)
-
-    return f'кратчайший путь {list(way)}  длинною в {cost} условных единиц'
+    return parent, path
 
 
 s = int(input('От какой вершины идти: '))
-f = int(input('До какой вершины идти: '))
-print(dfs(g, s, f))
+print(dfs(g, s))
